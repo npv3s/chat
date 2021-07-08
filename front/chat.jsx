@@ -15,7 +15,6 @@ class App extends React.Component {
             switch (json.event) {
                 case 'all':
                     let author_ids = JSON.parse(localStorage.getItem('author_ids') ?? "[]")
-                    json.messages.forEach(m => console.log(m._id, author_ids))
                     this.setState({
                         loading: false, messages: json.messages.map(msg => {
                             msg.time = new Date(msg.time)
@@ -59,15 +58,24 @@ class App extends React.Component {
     }
 
     send() {
-        let text = document.getElementById('msg-input').value.trim()
+        let text_input = document.getElementById('msg-input')
+        let text = text_input.value.trim()
         if (text === "") return
         this.setState({loading: true})
         this.ws.send(JSON.stringify({'event': 'msg', 'text': text}))
+        text_input.value = ""
+    }
+
+    componentDidMount() {
+        document.addEventListener('keyup', e => {
+            if (e.key === 'Enter')
+                this.send()
+        })
     }
 
     componentDidUpdate() {
-        let elem = document.getElementById('messages-container');
-        elem.scrollTop = elem.scrollHeight;
+        let elem = document.getElementById('messages-container')
+        elem.scrollTop = elem.scrollHeight
     }
 
     render() {
@@ -80,8 +88,11 @@ class App extends React.Component {
                 </div>
                 <div id="send-menu" className="box">
                     <input id="msg-input" className="input" type="text"/>
-                    <button className={"button" + (this.state.loading ? " is-loading" : "")}
-                            onClick={this.send}>Send
+                    <button className={"button is-dark" + (this.state.loading ? " is-loading" : "")}
+                            onClick={this.send}>
+                        <span className="icon">
+                            <img src="/send.svg" alt="Кнопка отправить"/>
+                        </span>
                     </button>
                 </div>
             </div>
