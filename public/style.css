@@ -1,0 +1,42 @@
+#app {
+    width: 100vw;
+    height: 100vh;
+}
+
+#root {
+    height: calc(100% - 6rem);
+    width: 750px;
+    max-width: 95%;
+    padding: 0;
+    background: #e3e3e3;
+}
+
+#messages-container {
+    display: flex;
+    flex-direction: column;
+    margin: 1.25rem 1.25rem 0;
+    overflow: auto;
+    height: calc(100% - 40px - 2.5rem);
+    scrollbar-width: none;
+}
+
+#messages-container::-webkit-scrollbar {
+    display: none;
+}
+
+.msg {
+    min-width: 150px;
+}
+
+.msg:last-child {
+    margin-bottom: 1.5rem !important;
+}
+
+#send-menu {
+    background: gray;
+    display: flex;
+}
+
+#send-menu button {
+    margin-left: 1rem;
+}

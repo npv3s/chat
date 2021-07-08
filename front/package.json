@@ -1,0 +1,15 @@
+{
+  "name": "chat-front",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "parcel serve chat.jsx",
+    "build": "parcel build chat.jsx"
+  },
+  "dependencies": {
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
+  },
+  "devDependencies": {
+    "parcel": "nightly"
+  }
+}
