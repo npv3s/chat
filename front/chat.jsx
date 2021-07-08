@@ -9,7 +9,7 @@ class App extends React.Component {
             messages: []
         }
 
-        this.ws = new WebSocket('ws://' + location.host + '/')
+        this.ws = new WebSocket((location.protocol === 'http:' ? 'ws://' : 'wss://') + location.host + '/')
         this.ws.onmessage = (ws_msg) => {
             let json = JSON.parse(ws_msg.data)
             switch (json.event) {
@@ -29,7 +29,8 @@ class App extends React.Component {
                         [...JSON.parse(localStorage.getItem('author_ids') ?? "[]"), json.message._id]
                     ))
                     this.setState((state) => {
-                        return {loading: false,
+                        return {
+                            loading: false,
                             messages: [...state.messages, {
                                 _id: json.message._id,
                                 time: new Date(json.message.time),
@@ -41,7 +42,8 @@ class App extends React.Component {
                     break
                 case 'msg':
                     this.setState((state) => {
-                        return {loading: false,
+                        return {
+                            loading: false,
                             messages: [...state.messages, {
                                 _id: json.message._id,
                                 time: new Date(json.message.time),

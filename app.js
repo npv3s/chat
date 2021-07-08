@@ -5,7 +5,7 @@ const logger = require('morgan');
 const http = require('http');
 const ws = require('ws');
 const mongodb = require('mongodb')
-const { MONGO_URL } = require('./secret')
+const {MONGO_URL} = require('./secret')
 
 const app = express();
 
@@ -60,8 +60,17 @@ webSocketServer.on('connection', (ws) => {
     });
 
     app.locals.messages.find().sort({'time': -1}).limit(20).toArray((err, messages) => {
+        if (typeof messages === "undefined")
+            messages = []
         ws.send(JSON.stringify({'event': 'all', 'messages': messages.reverse()}));
     });
 });
 
-server.listen(8888);
+if (module === require.main) {
+    if (typeof process.env.PORT !== "undefined")
+        server.listen(process.env.PORT);
+    else
+        server.listen(8080);
+}
+
+module.exports = server;
