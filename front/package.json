@@ -5,6 +5,11 @@
     "start": "parcel serve chat.jsx",
     "build": "parcel build chat.jsx"
   },
+  "targets": {
+    "app": {
+      "distDir": "../public"
+    }
+  },
   "dependencies": {
     "react": "17.0.2",
     "react-dom": "17.0.2"
