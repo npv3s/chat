@@ -1,0 +1,1 @@
+exports.MONGO_URL = "mongodb+srv://login:pass@host/"
